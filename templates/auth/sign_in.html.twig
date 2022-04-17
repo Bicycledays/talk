@@ -2,6 +2,11 @@
 
 {% block title %}Авторизация{% endblock %}
 
+{% block stylesheets_scrypts %}
+    {{ encore_entry_link_tags('auth') }}
+    {{ encore_entry_script_tags('auth') }}
+{% endblock %}
+
 {% block body %}
     <form>
         <div class="mb-3 mt-3">

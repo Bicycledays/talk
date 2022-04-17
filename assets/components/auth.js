@@ -24,7 +24,7 @@ function auth()
 
 function saveToken(data)
 {
-    window.localStorage.setItem(ticket, data.token)
+    window.localStorage.setItem(ticket, "Bearer " + data.token)
 }
 
 function token()
