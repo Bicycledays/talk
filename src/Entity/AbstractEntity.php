@@ -14,11 +14,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
 abstract class AbstractEntity
 {
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected ?\DateTimeImmutable $createdAt = null;
 
     /**
+     * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime_immutable", nullable=true)
      */
     protected ?\DateTimeImmutable $updatedAt = null;
