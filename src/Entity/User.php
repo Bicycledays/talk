@@ -43,11 +43,6 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     private string $password;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Talk::class, mappedBy="talkers")
-     */
-    private Collection $talks;
-
-    /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="author")
      */
     private Collection $messages;
@@ -65,14 +60,19 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     /**
      * @ORM\OneToMany(targetEntity=Talk::class, mappedBy="owner")
      */
-    private $ownTalks;
+    private Collection $ownTalks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="talker")
+     */
+    private Collection $members;
 
     public function __construct()
     {
-        $this->talks = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->invites = new ArrayCollection();
         $this->ownTalks = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,33 +157,6 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    /**
-     * @return Collection<int, Talk>
-     */
-    public function getTalks(): Collection
-    {
-        return $this->talks;
-    }
-
-    public function addTalk(Talk $talk): self
-    {
-        if (!$this->talks->contains($talk)) {
-            $this->talks[] = $talk;
-            $talk->addTalker($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTalk(Talk $talk): self
-    {
-        if ($this->talks->removeElement($talk)) {
-            $talk->removeTalker($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -292,6 +265,36 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
             // set the owning side to null (unless already changed)
             if ($ownTalk->getOwner() === $this) {
                 $ownTalk->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): self
+    {
+        if (!$this->members->contains($member)) {
+            $this->members[] = $member;
+            $member->setTalker($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): self
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getTalker() === $this) {
+                $member->setTalker(null);
             }
         }
 

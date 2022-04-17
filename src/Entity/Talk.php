@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -20,11 +21,6 @@ class Talk extends AbstractEntity
     protected ?int $id = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="talks")
-     */
-    private Collection $talkers;
-
-    /**
      * @ORM\OneToMany(targetEntity=Message::class, mappedBy="talk")
      */
     private Collection $messages;
@@ -34,39 +30,20 @@ class Talk extends AbstractEntity
      */
     private ?User $owner = null;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Member::class, mappedBy="talk")
+     */
+    private Collection $members;
+
     public function __construct()
     {
-        $this->talkers = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, User>
-     */
-    public function getTalkers(): Collection
-    {
-        return $this->talkers;
-    }
-
-    public function addTalker(User $talker): self
-    {
-        if (!$this->talkers->contains($talker)) {
-            $this->talkers[] = $talker;
-        }
-
-        return $this;
-    }
-
-    public function removeTalker(User $talker): self
-    {
-        $this->talkers->removeElement($talker);
-
-        return $this;
     }
 
     /**
@@ -107,6 +84,36 @@ class Talk extends AbstractEntity
     public function setOwner(?User $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
+     */
+    public function getMembers(): Collection
+    {
+        return $this->members;
+    }
+
+    public function addMember(Member $member): self
+    {
+        if (!$this->members->contains($member)) {
+            $this->members[] = $member;
+            $member->setTalk($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(Member $member): self
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getTalk() === $this) {
+                $member->setTalk(null);
+            }
+        }
 
         return $this;
     }
