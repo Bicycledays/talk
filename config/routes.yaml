@@ -8,3 +8,7 @@ sign-up:
 sign-in:
   path: /sign-in
   controller: App\Controller\AuthController::signIn
+
+home:
+  path: /talkers
+  controller: App\Controller\HomeController::home
