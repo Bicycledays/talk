@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Repository;
 
+use App\Entity\Invite;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -25,20 +25,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @param User $user
+     * @param Invite $invite
+     * @param bool $flush
      */
-    public function add(User $entity, bool $flush = true): void
+    public function add(
+        User $user,
+        Invite $invite,
+        bool $flush = true
+    ): void
     {
-        $this->_em->persist($entity);
+        $this->_em->persist($user);
+        $user->setInvite($invite);
         if ($flush) {
             $this->_em->flush();
         }
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
+     * @param User $entity
+     * @param bool $flush
      */
     public function remove(User $entity, bool $flush = true): void
     {
@@ -61,33 +67,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

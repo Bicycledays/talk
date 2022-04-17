@@ -1,23 +1,51 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Repository\UserRepository;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use App\Entity\User;
+use App\Form\SignUpFormType;
+use App\Service\AuthService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class AuthController extends AbstractController
 {
     /**
-     * @Route("/sign-in", name="app_sign_in")
+     * @param string $hash
+     * @param Request $request
+     * @param AuthService $service
+     * @return Response
      */
-    public function signIn(JWTTokenManagerInterface $manager, UserRepository $repository): Response
+    public function signUp(
+        string      $hash,
+        Request     $request,
+        AuthService $service
+    ): Response
     {
-        $user = $repository->find(2);
+        $invite = $service->checkInvite($hash);
 
-        return $this->render();
+        $user = new User();
+        $form = $this->createForm(SignUpFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $service->signUp(
+                $user,
+                $invite,
+                $form->get('plainPassword')->getData(),
+            );
+            return $this->redirectToRoute('sign-in');
+        }
+
+        return $this->render('auth/sign_up.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
+
+    public function signIn(Request $request): Response
+    {
+        return $this->render('auth/sign_in.html.twig');
     }
 }

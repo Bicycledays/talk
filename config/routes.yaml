@@ -1,2 +1,10 @@
-api_login_check:
-  path: /api/login_check
+api_auth_sign_in:
+  path: /api/auth/sign-in
+  methods: [POST]
+
+sign-up:
+  path: /sign-up/{hash}
+  controller: App\Controller\AuthController::signUp
+sign-in:
+  path: /sign-in
+  controller: App\Controller\AuthController::signIn
