@@ -12,3 +12,6 @@ sign-in:
 home:
   path: /talkers
   controller: App\Controller\HomeController::home
+api_all_talkers:
+  path: /api/all-talkers
+  controller: App\Controller\HomeController::getAllTalkers

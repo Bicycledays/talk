@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class TalkController extends AbstractController
 {
     /**
-     * @Route("/talk", name="app_talk")
+     * @Route("/talk/", name="app_talk")
      */
     public function index(): Response
     {
