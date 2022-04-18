@@ -7,6 +7,7 @@ use App\Entity\Invite;
 use App\Entity\User;
 use App\Repository\InviteRepository;
 use App\Repository\UserRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -38,15 +39,40 @@ class AuthService
      */
     public function checkInvite(string $hash): Invite
     {
+        $invite = $this->getInvite($hash);
+
+        /**
+         * проверяем срок годности
+         */
+        $now = new DateTimeImmutable();
+        $createdAt = $invite->getCreatedAt();
+
+        if ($createdAt instanceof DateTimeImmutable &&
+            $now->diff($createdAt)->days < Invite::TOTAL_LIFE_TIME
+        ) {
+            return $invite;
+        }
+
+        throw new NotFoundHttpException();
+    }
+
+    /**
+     * @param string $hash
+     * @return Invite
+     */
+    protected function getInvite(string $hash): Invite
+    {
         /** @var InviteRepository $repository */
         $repository = $this->em->getRepository(Invite::class);
         $invite = $repository->findOneBy([
             'hash' => $hash,
             'newUser' => null
         ]);
+
         if (!$invite instanceof Invite) {
             throw new NotFoundHttpException();
         }
+
         return $invite;
     }
 

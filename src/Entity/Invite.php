@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Invite extends AbstractEntity
 {
+    public const TOTAL_LIFE_TIME = 2;   // days
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -24,7 +26,7 @@ class Invite extends AbstractEntity
     private ?Registration $registration;
 
     /**
-     * @ORM\Column(type="string", length=32)
+     * @ORM\Column(type="string", length=64)
      */
     private ?string $hash = null;
 

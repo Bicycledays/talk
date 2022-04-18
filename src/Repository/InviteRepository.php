@@ -46,30 +46,4 @@ class InviteRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
-
-    /**
-     * @param string $hash
-     * @return bool
-     * true - приглашение действующее
-     * @throws NoResultException
-     * @throws NonUniqueResultException
-     */
-    public function isValid(string $hash): bool
-    {
-        $qb = $this->createQueryBuilder('i');
-        $result = $qb
-            ->select(
-                $qb->expr()->count('i.id'),
-                'count(i.id)'
-            )
-            ->andWhere(
-                $qb->expr()->eq('i.hash', ':h')
-            )
-            ->setParameter(':h', $hash)
-            ->getQuery()
-            ->getSingleResult(AbstractQuery::HYDRATE_SINGLE_SCALAR)
-            ;
-        var_dump($result);
-        die();
-    }
 }
