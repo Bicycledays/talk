@@ -25,6 +25,7 @@ function auth()
 function saveToken(data)
 {
     window.localStorage.setItem(ticket, "Bearer " + data.token)
+    window.location.href = '/users';
 }
 
 function token()

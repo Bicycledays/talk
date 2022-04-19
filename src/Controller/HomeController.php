@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\TalkerService;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,13 +16,20 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @param TalkerService $service
+     * @param UserService $service
      * @return JsonResponse
      */
-    public function getAllTalkers(TalkerService $service): JsonResponse
+    public function allUsers(UserService $service): JsonResponse
     {
         try {
-            ResponseHelper::$result = $service->getAllTalkers();
+            $view = $this->renderView(
+                'home/users.html.twig',
+                [
+                    'users' => $service->allUsers()
+                ]
+            );
+
+            ResponseHelper::$result = ['view' => $view];
         } catch (\Exception $e) {
             ResponseHelper::badMessage($e->getMessage());
         }

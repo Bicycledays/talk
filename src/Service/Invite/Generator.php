@@ -11,18 +11,21 @@ use Exception;
 class Generator
 {
     protected InviteRepository $repository;
+    protected string $host;
 
-    public function __construct(InviteRepository $repository)
+    public function __construct(string $host, InviteRepository $repository)
     {
+        $this->host = $host;
         $this->repository = $repository;
     }
 
     /**
      * @param User $sender
-     * @return Invite
+     * @return string
+     * Ссылка
      * @throws Exception
      */
-    public function generate(User $sender): Invite
+    public function generate(User $sender): string
     {
         $hash = hash('sha256', (string)random_int(0, PHP_INT_MAX));
         $invite = (new Invite())
@@ -31,6 +34,22 @@ class Generator
         ;
         $this->repository->add($invite);
 
-        return $invite;
+        return $this->url($invite);
+    }
+
+    /**
+     * @param Invite $invite
+     * @return string
+     */
+    public function url(Invite $invite): string
+    {
+        /** @var string $hash */
+        $hash = $invite->getHash();
+
+        return sprintf(
+            "%s/sign-up/%s",
+            $this->host,
+            $hash
+        );
     }
 }

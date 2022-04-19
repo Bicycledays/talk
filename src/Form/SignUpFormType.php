@@ -37,7 +37,7 @@ class SignUpFormType extends AbstractType
                         'message' => 'А пароль?!',
                     ]),
                     new Length([
-                        'min' => 10,
+                        'min' => 4,
                         'minMessage' => 'Длина пароля не менее {{ limit }} символов',
                         'max' => 4096,
                     ]),

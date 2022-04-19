@@ -71,12 +71,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return array<int, string[]>
      */
-    public function getTalkers(): array
+    public function allUsers(): array
     {
         $qb = $this->createQueryBuilder('u');
         return $qb
-            ->select('u.username')
+            ->select(
+                'u.username',
+                'u.id'
+            )
             ->getQuery()
             ->getResult();
     }
+
+//    public function countersByTalker(int $id): array
+//    {
+//        $qb = $this->createQueryBuilder('u');
+//        return $qb
+//            ->select('u.username', '')
+//            ->leftJoin('u.members', 'm')
+//            ->leftJoin('m.talk', 't')
+//            ->andWhere('')
+//            ->having('')
+//    }
 }

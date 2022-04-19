@@ -74,11 +74,6 @@ class Invite extends AbstractEntity
         return $this;
     }
 
-    public function generateHash(): string
-    {
-        return md5('test');
-    }
-
     public function getSender(): ?User
     {
         return $this->sender;

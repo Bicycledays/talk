@@ -12,6 +12,32 @@
         {% block stylesheets_scrypts %}{% endblock %}
     </head>
     <body>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Talks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Create Invite</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Create Talk</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                   aria-expanded="false">More</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Invite history</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#">Log out</a></li>
+                </ul>
+            </li>
+        </ul>
         {% block body %}{% endblock %}
     </body>
 </html>

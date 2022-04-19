@@ -1,6 +1,6 @@
 $(document).ready(talkers);
 
-const url = '/api/all-talkers'
+const url = '/api/users'
 
 function talkers() {
     $.ajax({
@@ -15,7 +15,8 @@ function talkers() {
 }
 
 function insertTalkers(data) {
-    $.each(data.result, function (i, user) {
-        $('#talkers_listing').append("<tr><td>" + user.username + "</td></tr>");
-    })
+    if (!data.success) {
+        alert(data.message);
+    }
+    $('#talkers_listing').append(data.result.view)
 }

@@ -10,8 +10,20 @@ sign-in:
   controller: App\Controller\AuthController::signIn
 
 home:
-  path: /talkers
+  path: /users
   controller: App\Controller\HomeController::home
-api_all_talkers:
-  path: /api/all-talkers
-  controller: App\Controller\HomeController::getAllTalkers
+api-all-users:
+  path: /api/users
+  controller: App\Controller\HomeController::allUsers
+
+profile:
+  path: /profile
+  controller: App\Controller\UserController::profile
+api-profile:
+  path: /api/profile/{id}
+  controller: App\Controller\UserController::profileData
+
+
+api-invite-create:
+  path: /api/invite-create
+  controller: App\Controller\InviteController::createInvite

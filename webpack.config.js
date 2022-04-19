@@ -12,6 +12,8 @@ Encore
 
     .addEntry('auth', './assets/app-auth.js')
     .addEntry('talkers', './assets/app-talkers.js')
+    .addEntry('profile', './assets/app-profile.js')
+
     .enableStimulusBridge('./assets/controllers.json')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()

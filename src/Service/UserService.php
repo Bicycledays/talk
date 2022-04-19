@@ -5,7 +5,7 @@ namespace App\Service;
 
 use App\Repository\UserRepository;
 
-class TalkerService
+class UserService
 {
     protected UserRepository $userRepository;
 
@@ -17,8 +17,8 @@ class TalkerService
     /**
      * @return array<int, string[]>
      */
-    public function getAllTalkers(): array
+    public function allUsers(): array
     {
-        return $this->userRepository->getTalkers();
+        return $this->userRepository->allUsers();
     }
 }
