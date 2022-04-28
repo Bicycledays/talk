@@ -1,6 +1,6 @@
-$(document).ready(auth);
+import {saveToken} from './token'
 
-const ticket = 'talk_token'
+$(document).ready(auth);
 
 function auth()
 {
@@ -17,18 +17,13 @@ function auth()
                 password: password
             }),
             dataType: "json",
-            success: saveToken
+            success: check
         })
     })
 }
 
-function saveToken(data)
+function check(data)
 {
-    window.localStorage.setItem(ticket, "Bearer " + data.token)
+    saveToken(data.token)
     window.location.href = '/users';
-}
-
-function token()
-{
-    window.localStorage.getItem(ticket)
 }

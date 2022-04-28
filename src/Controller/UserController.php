@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Service\UserService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends AbstractController
@@ -19,27 +18,23 @@ class UserController extends AbstractController
     }
 
     /**
-     * @param int $id
-     * @param Request $request
-     * @param UserRepository $repository
+     * @param int|null $id
+     * @param UserService $service
      * @return JsonResponse
      */
-    public function profileData(int $id, Request $request, UserRepository $repository): JsonResponse
+    public function profileData(?int $id, UserService $service): JsonResponse
     {
         try {
-            $user = $repository->find($id ?? 0);
-            if (!$user instanceof User) {
-                throw new \Exception("Пользователь не найден");
-            } elseif ($user === $this->getUser()) {
-                // todo форма профиля
-                ResponseHelper::$result = ['view' => 'у ля ля'];
+            if ($id === null) {
+                /** @var User $user */
+                $user = $this->getUser();
+                $template = '/profile/me.html.twig';
             } else {
-                $view = $this->renderView(
-                    '/profile/user.html.twig',
-                    ['user' => $user]
-                );
-                ResponseHelper::$result = ['view' => $view];
+                $user = $service->profileUser($id);
+                $template = '/profile/user.html.twig';
             }
+            $view = $this->renderView($template, ['user' => $user]);
+            ResponseHelper::$result = ['view' => $view];
         } catch (\Exception $e) {
             ResponseHelper::badMessage($e->getMessage());
         }

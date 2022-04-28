@@ -1,16 +1,21 @@
+import {getToken} from './token'
+
 $(document).ready(profile);
 
-const url = '/api/profile/'
+const url = '/api/profile'
 
 function profile() {
     let searchParams = new URLSearchParams(window.location.search)
     let id = searchParams.get('id')
+    let attr = id ? '/' + id : ''
     $.ajax({
         type: "GET",
         accept: "application/json",
-        headers: {"Authorization": localStorage.getItem('talk_token')},
+        headers: {
+            "Authorization": getToken()
+        },
         contentType: "application/json",
-        url: url + id,
+        url: url + attr,
         dataType: "json",
         success: fill
     })

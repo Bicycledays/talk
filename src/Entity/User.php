@@ -300,4 +300,31 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
         return $this;
     }
+
+    /**
+     * @return int
+     */
+    public function countInvites(): int
+    {
+        return $this->invites->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function countOwnTalks(): int
+    {
+        return $this->ownTalks->count();
+    }
+
+    /**
+     * @return User|null
+     */
+    public function inviter(): ?User
+    {
+        if ($this->invite instanceof Invite) {
+            return $this->invite->getSender();
+        }
+        return null;
+    }
 }

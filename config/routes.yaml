@@ -1,7 +1,6 @@
 api_auth_sign_in:
   path: /api/auth/sign-in
   methods: [POST]
-
 sign-up:
   path: /sign-up/{hash}
   controller: App\Controller\AuthController::signUp
@@ -20,10 +19,12 @@ profile:
   path: /profile
   controller: App\Controller\UserController::profile
 api-profile:
-  path: /api/profile/{id}
+  path: /api/profile/{id?}
   controller: App\Controller\UserController::profileData
 
-
+invite:
+  path: /invite
+  controller: App\Controller\InviteController::invite
 api-invite-create:
   path: /api/invite-create
   controller: App\Controller\InviteController::createInvite
