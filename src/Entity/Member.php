@@ -25,11 +25,12 @@ class Member
     private ?User $talker = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Talk::class, inversedBy="members")
+     * @ORM\ManyToOne(targetEntity=Talk::class, cascade={"persist"}, inversedBy="members")
      */
     private ?Talk $talk = null;
 
     /**
+     * Последенее прочитанное сообщение пользователем ($talker) в диалоге ($talk)
      * @ORM\ManyToOne(targetEntity=Message::class, inversedBy="members")
      */
     private ?Message $viewedMessage = null;

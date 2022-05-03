@@ -35,6 +35,11 @@ class Talk extends AbstractEntity
      */
     private Collection $members;
 
+    /**
+     * @ORM\Column(type="integer", options={"default": 1})
+     */
+    private ?int $amountMembers = 0;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
@@ -114,6 +119,18 @@ class Talk extends AbstractEntity
                 $member->setTalk(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAmountMembers(): ?int
+    {
+        return $this->amountMembers;
+    }
+
+    public function setAmountMembers(int $amountMembers): self
+    {
+        $this->amountMembers = $amountMembers;
 
         return $this;
     }

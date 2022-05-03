@@ -11,6 +11,7 @@ Encore
     .setPublicPath('/build')
 
     .addEntry('auth', './assets/app-auth.js')
+    .addEntry('talk', './assets/app-talk.js')
     .addEntry('talkers', './assets/app-talkers.js')
     .addEntry('profile', './assets/app-profile.js')
 

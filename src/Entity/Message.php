@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Entity;
 
@@ -17,22 +18,22 @@ class Message extends AbstractEntity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      */
-    private $author;
+    private ?User $author = null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Talk::class, inversedBy="messages")
      */
-    private $talk;
+    private ?Talk $talk = null;
 
     /**
      * @ORM\Column(type="string", length=1000)
      */
-    private $text;
+    private ?string $text = null;
 
     /**
      * @ORM\OneToMany(targetEntity=Member::class, mappedBy="viewedMessage")

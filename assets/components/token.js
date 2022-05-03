@@ -1,7 +1,6 @@
 const key = 'talk-auth'
 
-export function saveToken(token)
-{
+export function saveToken(token) {
     // $.cookie(
     //     'talk-auth',
     //     data.token,
@@ -10,12 +9,14 @@ export function saveToken(token)
     window.localStorage.setItem(key, token)
 }
 
-export function getToken()
-{
+export function getToken() {
     return 'Bearer ' + window.localStorage.getItem(key)
 }
 
-export function logOut()
-{
+export function token() {
+    return window.localStorage.getItem(key)
+}
+
+export function logOut() {
     // todo remove token
 }

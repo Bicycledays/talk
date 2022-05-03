@@ -21,6 +21,9 @@ profile:
 api-profile:
   path: /api/profile/{id?}
   controller: App\Controller\UserController::profileData
+user-id:
+  path: /api/user-id
+  controller: App\Controller\UserController::userId
 
 invite:
   path: /invite
@@ -28,3 +31,13 @@ invite:
 api-invite-create:
   path: /api/invite-create
   controller: App\Controller\InviteController::createInvite
+
+talk-ids:
+  path: /api/talk-ids
+  controller: App\Controller\TalkController::talkIdentifiers
+talk:
+  path: /talk
+  controller: App\Controller\TalkController::talk
+api-talk:
+  path: /api/talk/{id}
+  controller: App\Controller\TalkController::apiTalk
