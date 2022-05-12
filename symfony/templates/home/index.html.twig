@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Все здесь{% endblock %}
+
+{% block stylesheets_scrypts %}
+    {{ encore_entry_link_tags('talkers') }}
+    {{ encore_entry_script_tags('talkers') }}
+{% endblock %}
+
+{% block body %}
+    <div id="talkers_listing"></div><nav>
+{% endblock %}

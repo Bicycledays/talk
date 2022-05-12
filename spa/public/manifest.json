@@ -1,0 +1,5 @@
+{
+  "app.js": "http://localhost:8080/app.js",
+  "runtime.js": "http://localhost:8080/runtime.js",
+  "index.html": "http://localhost:8080/index.html"
+}
