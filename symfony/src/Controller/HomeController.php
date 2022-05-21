@@ -22,14 +22,7 @@ class HomeController extends AbstractController
     public function allUsers(UserService $service): JsonResponse
     {
         try {
-            $view = $this->renderView(
-                'home/users.html.twig',
-                [
-                    'users' => $service->allUsers()
-                ]
-            );
-
-            ResponseHelper::$result = ['view' => $view];
+            ResponseHelper::$result = $service->allUsers();
         } catch (\Exception $e) {
             ResponseHelper::badMessage($e->getMessage());
         }
