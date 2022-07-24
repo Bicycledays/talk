@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Users from "../components/Users";
-import Profile from "../components/Profile";
+import Users from "../components/UserListing.vue";
+import Profile from "../components/UserProfile.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
